@@ -29,19 +29,19 @@ function setup() {
   local buildfs="${2}"
 
   mount -t overlay overlay -o lowerdir=/,upperdir="${buildfs}",workdir="${rootfs}" "${rootfs}"
-  guard $? 'could not mount overlayfs onto root/build directories'
+  guard $? 'não foi possível montar overlayfs nos diretórios root/build'
 
   mount -t proc /proc "${rootfs}/proc"
-  guard $? 'could not mount procfs into overlayfs'
+  guard $? 'não foi possível montar procfs em overlayfs'
 
   mount -t sysfs /sys "${rootfs}/sys"
-  guard $? 'could not mount sysfs into overlayfs'
+  guard $? 'não foi possível montar sysfs em overlayfs'
 
   mount --rbind /dev "${rootfs}/dev"
-  guard $? 'could not bind mount /dev into overlayfs'
+  guard $? 'não foi possível vincular a montagem /dev ao overlayfs'
 
   mount --rbind /run "${rootfs}/run"
-  guard $? 'could not bind mount /run into overlayfs'
+  guard $? 'não foi possível vincular mount /run ao overlayfs'
 
   mount --bind "${SELF_DIR}" "${rootfs}/${SELF_DIR}"
   touch "${rootfs}/.chroot"
@@ -51,7 +51,7 @@ function main() {
   local tmpdir='/tmp/xbps-src'
 
   test ! -f '/.chroot'
-  guard $? 'already in a chroot'
+  guard $? 'já em um chroot'
 
   purge "${tmpdir}"/{rootfs,buildfs}
 
