@@ -26,7 +26,7 @@ function install() {
   local srcdir="${SELF_DIR}/srcpkgs/${1}"
 
   test -f "${srcdir}/template"
-  guard $? 'no teamplate file found'
+  guard $? 'nenhum arquivo teamplate encontrado'
 
   # skip dependency install if not running as root
   test "$(whoami)" != 'root' && return 1
@@ -43,7 +43,7 @@ function build() {
   local srcdir="${SELF_DIR}/srcpkgs/${1}"
 
   test -f "${srcdir}/template"
-  guard $? 'no teamplate file found'
+  guard $? 'nenhum arquivo teamplate encontrado'
 
   find "${pkgdir}" -mindepth 1 -delete
   mkdir -p "${pkgdir}"
@@ -53,11 +53,11 @@ function build() {
 
     # run prepare steps from template file
     ( set -e; set -x; prepare )
-    guard $? 'error in prepare step'
+    guard $? 'erro na etapa de preparação'
 
     # run package steps from template file
     ( set -e; set -x; package )
-    guard $? 'error in package step'
+    guard $? 'erro na etapa do pacote'
 
     mkdir -p "${bindir}/${arch}"
 
