@@ -1,20 +1,23 @@
-This repository contains tools and build scripts to automate the building of packages for the [X Binary Package System](https://github.com/void-linux/xbps) (XBPS).
 
-## Overview
+Este repositório contém ferramentas e scripts de construção para automatizar a construção de pacotes para o [X Binary Package System](https://github.com/void-linux/xbps) (XBPS).
 
-Packages can be created using the `xbps-src` utility from this repository. To build a specific package provide the package name as an argument to `xbps-src`. Available packages can be found in the `/srcpkgs` subdirectories.
 
-After a successful build the resulting package is stored in `/binpkgs`. This directory can then be used as a XBPS repository to install from.
+## Visão geral
 
-During compilation all source files are stored in `/pkgdir`. This directory is purged after a successful build. If an error occures all files in `/pkgdir` are left untouched for debugging purposes.
+Pacotes podem ser criados usando o utilitário `xbps-src` deste repositório. Para construir um pacote específico, forneça o nome do pacote como um argumento para `xbps-src`. Pacotes disponíveis podem ser encontrados nos subdiretórios `/srcpkgs`.
 
-## Creating packages
+Após uma construção bem-sucedida, o pacote resultante é armazenado em `/binpkgs`. Este diretório pode então ser usado como um repositório XBPS para instalação.
 
-For each new package first a new directory must be created in `/srcpkgs`. Then a `template` file must be created which contains the build instructions and package metadata.
+Durante a compilação, todos os arquivos de origem são armazenados em `/pkgdir`. Este diretório é expurgado após uma construção bem-sucedida. Se ocorrer um erro, todos os arquivos em `/pkgdir` serão deixados intocados para fins de depuração.
 
-### Package metadata
 
-Variables are used to define package metadata:
+## Criando pacotes
+
+Para cada novo pacote, primeiro um novo diretório deve ser criado em `/srcpkgs`. Então, um arquivo `template` deve ser criado, contendo as instruções de construção e metadados do pacote.
+
+### Metadados do pacote
+
+Variáveis ​​são usadas para definir metadados do pacote:
 
 ```sh
 pkgname='my-custom-package'
@@ -28,9 +31,9 @@ license='custom'
 homepage='https://example.org'
 ```
 
-### Build instructions
+### Instruções de construção
 
-Functions are used to automate the building of packages:
+As funções são usadas para automatizar a construção de pacotes:
 
 ```sh
 prepare() {
@@ -42,11 +45,11 @@ package() {
 }
 ```
 
-All files in the `/pkgdir` directory will be included in the final package when `package()` returns successfully.
+Todos os arquivos no diretório `/pkgdir` serão incluídos no pacote final quando `package()` retornar com sucesso.
 
-### Signing packages
+### Assinando pacotes
 
-Packages are automatically signed after building. In order to sign packages, a signig key must be generated. This key can be generated with either `ssh-keygen` or `openssl`:
+Os pacotes são assinados automaticamente após a construção. Para assinar pacotes, uma chave de assinatura deve ser gerada. Esta chave pode ser gerada com `ssh-keygen` ou `openssl`:
 
 ```sh
 $ ssh-keygen -t rsa -m PEM -f signkey.pem
@@ -55,3 +58,9 @@ $ ssh-keygen -t rsa -m PEM -f signkey.pem
 ```sh
 $ openssl genrsa -out signkey.pem
 ```
+
+
+[Fonte](https://www.reddit.com/r/voidlinux/comments/pe0yvp/creating_packages_for_local_repo/?tl=pt-br)
+
+
+
